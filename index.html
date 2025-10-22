@@ -251,7 +251,8 @@
                             <span class="px-3 py-1 rounded-full bg-black bg-opacity-22 text-sm font-semibold">Launching
                                 —
                                 The Awakening</span>
-                            <span class="text-xs text-gray-400">7-day arc</span>
+                            <span class="text-xs text-gray-400">3-day arc</span>
+                            <span class="text-xs text-gray-400">3-day arc</span>
                         </div>
                         <h1
                             class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white font-display">
@@ -326,11 +327,13 @@
     </div>
     </section>
 
-    <!-- Storyline + 7-Day Countdown -->
+    <!-- Storyline + 3-Day Countdown -->
+    <!-- Storyline + 3-Day Countdown -->
     <section id="storyline" class="relative z-10 px-6 py-16 bg-black bg-opacity-14">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-4xl font-bold text-gradient">The Awakening — 7-Day Launch Arc</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gradient">The Awakening — 3-Day Launch Arc</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gradient">The Awakening — 3-Day Launch Arc</h2>
                 <p class="text-gray-300 mt-3 max-w-2xl mx-auto">A cinematic narrative leading to the first reveal — each
                     day comes with a thematic X post and visual.</p>
             </div>
@@ -339,7 +342,8 @@
                 <div class="lg:col-span-5">
                     <div class="relative p-6 rounded-2xl bg-black bg-opacity-28">
                         <div class="flex items-center justify-between mb-4">
-                            <div class="text-sm text-gray-400">7-Day Timeline</div>
+                            <div class="text-sm text-gray-400">3-Day Timeline</div>
+                            <div class="text-sm text-gray-400">3-Day Timeline</div>
                             <div class="text-xs text-gray-300">Follow the arc</div>
                         </div>
 
@@ -844,9 +848,9 @@
 
         // ---------- TRUMVENGERS: Countdown and Reveal Logic ----------
         (function () {
-            // 7-day countdown target: choose a date 7 days from now for demo
+            // 3-day countdown target: choose a date 3 days from now for demo
             const now = new Date();
-            const launch = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+            const launch = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
             const countdownEl = document.getElementById('countdown');
             const nextDayText = document.getElementById('nextDayText');
 
@@ -855,7 +859,7 @@
             const timelinePercent = document.getElementById('timelinePercent');
             const currentDayEl = document.getElementById('currentDay');
 
-            const arcDays = ['Darkness', 'Spark', 'Whispers', 'Rising', 'Energy', 'Sensing', 'Launch'];
+            const arcDays = ['Darkness', 'Spark', 'Launch'];
 
             function seedTimeline() {
                 timelineEl.innerHTML = '';
@@ -875,7 +879,7 @@
                     nextDayText.textContent = 'Iron Trump emerges — check reveals section.';
                     timelineProgress.style.width = '100%';
                     timelinePercent.textContent = '100%';
-                    currentDayEl.textContent = '7';
+                    currentDayEl.textContent = String(arcDays.length);
                     return;
                 }
                 const totalMillis = launch - now;
@@ -888,10 +892,10 @@
                 const hrs = Math.floor((t / (1000 * 60 * 60)) % 24);
                 const mins = Math.floor((t / (1000 * 60)) % 60);
                 const secs = Math.floor((t / 1000) % 60);
-                const dayNumber = 7 - days;
+                const dayNumber = arcDays.length - days;
                 countdownEl.textContent = `${days}d ${hrs}h ${mins}m ${secs}s`;
-                nextDayText.textContent = `Day ${dayNumber} — ${arcDays[Math.min(6, dayNumber - 1)] || 'Preparing...'}`;
-                currentDayEl.textContent = String(Math.max(1, Math.min(7, dayNumber)));
+                nextDayText.textContent = `Day ${dayNumber} — ${arcDays[Math.max(0, Math.min(arcDays.length - 1, dayNumber - 1))] || 'Preparing...'}`;
+                currentDayEl.textContent = String(Math.max(1, Math.min(arcDays.length, dayNumber)));
             }
             seedTimeline();
             updateCountdown();
